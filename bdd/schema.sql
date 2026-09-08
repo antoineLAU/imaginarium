@@ -3,7 +3,7 @@ CREATE TABLE users (
   pseudo TEXT NOT NULL,
   email TEXT NOT NULL UNIQUE,
   password_hash TEXT NOT NULL,
-  created_at TEXT NOT NULL
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE creations (
@@ -11,20 +11,21 @@ CREATE TABLE creations (
   user_id INTEGER NOT NULL,
   titre TEXT NOT NULL,
   description TEXT NOT NULL,
-  type TEXT NOT NULL,
-  contenu_texte TEXT NOT NULL,
-  image_url TEXT NOT NULL,
-  created_at TEXT NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users(id)
+  type TEXT NOT NULL CHECK(type IN ('texte', 'art', 'dessin', 'illustration')),
+  contenu_texte TEXT,
+  image_url TEXT,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE likes (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INTEGER NOT NULL,
   creation_id INTEGER NOT NULL,
-  created_at TEXT NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (creation_id) REFERENCES creations(id)
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(user_id, creation_id),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (creation_id) REFERENCES creations(id) ON DELETE CASCADE
 );
 
 CREATE TABLE comments (
@@ -32,7 +33,7 @@ CREATE TABLE comments (
   user_id INTEGER NOT NULL,
   creation_id INTEGER NOT NULL,
   texte TEXT NOT NULL,
-  created_at TEXT NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (creation_id) REFERENCES creations(id)
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (creation_id) REFERENCES creations(id) ON DELETE CASCADE
 );

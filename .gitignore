@@ -1,2 +1,4 @@
 AGENTS.md
 commentaire/
+*.db
+node_modules/
