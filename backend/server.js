@@ -1,9 +1,11 @@
 import express from "express";
+import cors from "cors";
 import { DatabaseSync } from "node:sqlite";
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 const app = express();
+app.use(cors())
 const PORT = 3000;
 app.use(express.json());
 const dbPath = path.join(process.cwd(), "..", "bdd", "database.db");
