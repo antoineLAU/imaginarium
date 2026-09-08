@@ -87,8 +87,12 @@ const texte = req.body.texte;
 if (!user_id || !texte) {
 return res.status(400).json({ error: "user_id texte obligatoires" });
 }
+try {
 const info = db.prepare("INSERT INTO comments (user_id, creation_id, texte) VALUES (?, ?, ?)").run(user_id, creation_id, texte);
 res.json({ id: info.lastInsertRowid });
+} catch (e) {
+res.status(400).json({ error: "utilisateur ou creation inconnu" });
+}
 });
 app.get("/creations/:id/comments", (req, res) => {
 const creation_id = req.params.id;
