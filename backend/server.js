@@ -1,4 +1,5 @@
 import express from "express";
+import bcrypt from "bcryptjs";
 import cors from "cors";
 import { DatabaseSync } from "node:sqlite";
 import fs from "node:fs";
@@ -48,7 +49,7 @@ return res.status(400).json({ error: "email invalide" });
 if (password.length < 4) {
 return res.status(400).json({ error: "password 4 minimum" });
 }
-const hash = crypto.createHash("sha256").update(password).digest("hex");
+const hash = bcrypt.hashSync(password, 10);
 try {
 const info = db.prepare("INSERT INTO users (pseudo, email, password_hash) VALUES (?, ?, ?)").run(pseudo, email, hash);
 const token = crypto.randomBytes(24).toString("hex");
@@ -64,9 +65,22 @@ const password = req.body.password;
 if (!email || !password) {
 return res.status(400).json({ error: "email password obligatoires" });
 }
-const hash = crypto.createHash("sha256").update(password).digest("hex");
 const user = db.prepare("SELECT * FROM users WHERE email = ?").get(email);
-if (!user || user.password_hash !== hash) {
+let ok = false;
+try {
+ok = bcrypt.compareSync(password, user.password_hash);
+} catch (e) {
+ok = false;
+}
+if (!ok && user && user.password_hash.length === 64) {
+const oldHash = crypto.createHash("sha256").update(password).digest("hex");
+if (user.password_hash === oldHash) {
+ok = true;
+const newHash = bcrypt.hashSync(password, 10);
+db.prepare("UPDATE users SET password_hash = ? WHERE id = ?").run(newHash, user.id);
+}
+}
+if (!user || !ok) {
 return res.status(401).json({ error: "email ou mot de passe faux" });
 }
 const token = crypto.randomBytes(24).toString("hex");
