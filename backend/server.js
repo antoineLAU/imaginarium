@@ -48,7 +48,7 @@ const user = db.prepare("SELECT * FROM users WHERE email = ?").get(email);
 if (!user || user.password_hash !== hash) {
 return res.status(401).json({ error: "email ou mot de passe faux" });
 }
-res.json({ id: user.id, pseudo: user.pseudo });
+res.json({ id: user.id, pseudo: user.pseudo, role: user.role });
 });
 app.post("/creations", (req, res) => {
 const user_id = req.body.user_id;
@@ -98,6 +98,46 @@ app.get("/creations/:id/comments", (req, res) => {
 const creation_id = req.params.id;
 const rows = db.prepare("SELECT comments.*, users.pseudo FROM comments JOIN users ON users.id = comments.user_id WHERE creation_id = ? ORDER BY comments.id ASC").all(creation_id);
 res.json(rows);
+});
+app.get("/admin/users", (req, res) => {
+const admin_id = req.query.admin_id;
+const admin = db.prepare("SELECT * FROM users WHERE id = ?").get(admin_id);
+if (!admin || admin.role !== "admin") {
+return res.status(403).json({ error: "admin seulement" });
+}
+const rows = db.prepare("SELECT id, pseudo, email, role, created_at FROM users ORDER BY id ASC").all();
+res.json(rows);
+});
+app.delete("/admin/creations/:id", (req, res) => {
+const admin_id = req.query.admin_id;
+const admin = db.prepare("SELECT * FROM users WHERE id = ?").get(admin_id);
+if (!admin || admin.role !== "admin") {
+return res.status(403).json({ error: "admin seulement" });
+}
+const info = db.prepare("DELETE FROM creations WHERE id = ?").run(req.params.id);
+res.json({ deleted: info.changes });
+});
+app.delete("/admin/comments/:id", (req, res) => {
+const admin_id = req.query.admin_id;
+const admin = db.prepare("SELECT * FROM users WHERE id = ?").get(admin_id);
+if (!admin || admin.role !== "admin") {
+return res.status(403).json({ error: "admin seulement" });
+}
+const info = db.prepare("DELETE FROM comments WHERE id = ?").run(req.params.id);
+res.json({ deleted: info.changes });
+});
+app.put("/admin/users/:id/role", (req, res) => {
+const admin_id = req.body.admin_id;
+const admin = db.prepare("SELECT * FROM users WHERE id = ?").get(admin_id);
+if (!admin || admin.role !== "admin") {
+return res.status(403).json({ error: "admin seulement" });
+}
+const role = req.body.role;
+if (role !== "user" && role !== "admin") {
+return res.status(400).json({ error: "role user ou admin seulement" });
+}
+const info = db.prepare("UPDATE users SET role = ? WHERE id = ?").run(role, req.params.id);
+res.json({ changed: info.changes });
 });
 app.listen(PORT, () => {
 console.log("serveur sur http://localhost:3000");
