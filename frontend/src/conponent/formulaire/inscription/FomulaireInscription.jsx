@@ -7,6 +7,15 @@ function FormulaireInscription({ onAnnuler }) {
   const [confirmEmail, setConfirmEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [etape, setEtape] = useState(1);
+
+  function suivant() {
+    setEtape(etape + 1);
+  }
+
+  function retour() {
+    setEtape(etape - 1);
+  }
 
   function inscrire() {
     if (email !== confirmEmail) {
@@ -31,13 +40,33 @@ function FormulaireInscription({ onAnnuler }) {
   return (
     <>
       <h2>Inscription</h2>
-      <input placeholder="pseudo" onChange={(e) => setPseudo(e.target.value)} />
-      <input placeholder="email" onChange={(e) => setEmail(e.target.value)} />
-      <input placeholder="confirme email" onChange={(e) => setConfirmEmail(e.target.value)} />
-      <input placeholder="password" type="password" onChange={(e) => setPassword(e.target.value)} />
-      <input placeholder="confirme password" type="password" onChange={(e) => setConfirmPassword(e.target.value)} />
-      <Bouton texte= "S'inscrire" onClick={inscrire} />
-      <Bouton texte= "Annuler" onClick={onAnnuler}/>
+      {etape === 1 && (
+        <div>
+          <h3>Etape 1</h3>
+          <input placeholder="pseudo" onChange={(e) => setPseudo(e.target.value)} />
+          <Bouton texte="Suivant" onClick={suivant} />
+          <Bouton texte="Annuler" onClick={onAnnuler} />
+        </div>
+      )}
+      {etape === 2 && (
+        <div>
+          <h3>Etape 2</h3>
+          <input placeholder="email" onChange={(e) => setEmail(e.target.value)} />
+          <input placeholder="confirme email" onChange={(e) => setConfirmEmail(e.target.value)} />
+          <Bouton texte="Retour" onClick={retour} />
+          <Bouton texte="Suivant" onClick={suivant} />
+        </div>
+      )}
+      {etape === 3 && (
+        <div>
+          <h3>Etape 3</h3>
+          <input placeholder="password" type="password" onChange={(e) => setPassword(e.target.value)} />
+          <input placeholder="confirme password" type="password" onChange={(e) => setConfirmPassword(e.target.value)} />
+          <Bouton texte="Retour" onClick={retour} />
+          <Bouton texte="S'inscrire" onClick={inscrire} />
+          <Bouton texte="Annuler" onClick={onAnnuler} />
+        </div>
+      )}
     </>
   );
 }

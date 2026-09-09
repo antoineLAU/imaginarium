@@ -26,13 +26,15 @@ function Acceuil() {
         </nav>
         <div>
         <Bouton texte="Connexion" />
-        <Bouton texte="Inscription" onClick={() => setVoirInscription(true)} />
+        <Bouton texte="Rejoindre" onClick={() => setVoirInscription(true)} />
         </div>
       </header>
       <main>
         <section id="accueil">
           <h1>Imaginarium</h1>
           <p> text</p>
+          <Bouton texte="Créer mon espace" onClick={() => setVoirInscription(true)} />
+          <Bouton texte="Explorer les créations"/>
         </section>
         <section id="galerie">
           <h2>top 10 des plus vus</h2>
