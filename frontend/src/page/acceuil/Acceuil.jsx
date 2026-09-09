@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Header from "../../conponent/header/Header";
 import Bouton from "../../conponent/bouton/Bouton";
 import Inscription from "../inscription/inscription";
 import "./Acceuil.css";
@@ -16,19 +17,7 @@ function Acceuil() {
 
   return (
     <>
-      <header>
-        <p>Imaginarium</p>
-        <nav>
-          <a href="#accueil">Accueil</a>
-          <a href="#galerie">Top 10</a>
-          <a href="#dessin">art et dessin</a>
-          <a href="#livre">texte et Livre</a>
-        </nav>
-        <div>
-        <Bouton texte="Connexion" />
-        <Bouton texte="Rejoindre" onClick={() => setVoirInscription(true)} />
-        </div>
-      </header>
+      <Header onRejoindre={() => setVoirInscription(true)} />
       <main>
         <section id="accueil">
           <h1>Imaginarium</h1>
