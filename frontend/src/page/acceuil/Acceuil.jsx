@@ -19,7 +19,7 @@ function Acceuil() {
       <p>{message}</p>
       <Bouton texte="Connexion" />
       <Bouton texte="Inscription" onClick={() => setVoirInscription(true)} />
-      {voirInscription && <FormulaireInscription />}
+      {voirInscription && <FormulaireInscription onAnnuler={() => setVoirInscription(false)} />}
     </>
   );
 }
