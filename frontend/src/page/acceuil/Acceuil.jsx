@@ -1,25 +1,49 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Bouton from "../../conponent/bouton/Bouton";
-import FormulaireInscription from "../../conponent/formulaire/inscription/FomulaireInscription";
+import Inscription from "../inscription/inscription";
 import "./Acceuil.css";
 
 function Acceuil() {
-  const [message, setMessage] = useState("connexion en cours");
   const [voirInscription, setVoirInscription] = useState(false);
 
-  useEffect(() => {
-    fetch("http://localhost:3000/")
-      .then((res) => res.json())
-      .then((data) => setMessage(data.message));
-  }, []);
+  if (voirInscription) {
+    return (
+      <>
+        <Inscription onAnnuler={() => setVoirInscription(false)} />
+      </>
+    );
+  }
 
   return (
     <>
-      <h1>Imaginarium</h1>
-      <p>{message}</p>
-      <Bouton texte="Connexion" />
-      <Bouton texte="Inscription" onClick={() => setVoirInscription(true)} />
-      {voirInscription && <FormulaireInscription onAnnuler={() => setVoirInscription(false)} />}
+      <header>
+        <p>Imaginarium</p>
+        <nav>
+          <a href="#accueil">Accueil</a>
+          <a href="#galerie">Top 10</a>
+          <a href="#dessin">art et dessin</a>
+          <a href="#livre">texte et Livre</a>
+        </nav>
+        <div>
+        <Bouton texte="Connexion" />
+        <Bouton texte="Inscription" onClick={() => setVoirInscription(true)} />
+        </div>
+      </header>
+      <main>
+        <section id="accueil">
+          <h1>Imaginarium</h1>
+          <p> text</p>
+        </section>
+        <section id="galerie">
+          <h2>top 10 des plus vus</h2>
+        </section>
+        <section id="dessin">
+          <h2>Art et dessin</h2>
+        </section>
+        <section id="livre">
+          <h2>texte et livre</h2>
+        </section>
+      </main>
     </>
   );
 }
