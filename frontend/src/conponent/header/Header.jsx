@@ -1,9 +1,10 @@
 import Bouton from "../bouton/Bouton";
 import "./Header.css";
 
-function Header({ onRejoindre, showNav = true, showConnexion = true, texteBouton = "Rejoindre" }) {
+function Header({ onRejoindre, showNav = true, showConnexion = true, texteBouton = "Rejoindre", onRetour, showAccueil = false }) {
     return (
         <div className="header">
+            {showAccueil && <Bouton texte="← Accueil" onClick={onRetour} />}
             <p className="header-logo">Imaginarium</p>
 
             {showNav && (

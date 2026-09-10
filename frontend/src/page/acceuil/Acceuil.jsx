@@ -2,15 +2,25 @@ import { useState } from "react";
 import Header from "../../conponent/header/Header";
 import Bouton from "../../conponent/bouton/Bouton";
 import Inscription from "../inscription/inscription";
+import ExplorerLesCreations from "../explorer_les_creations/ExplorerLesCreations";
 import "./Acceuil.css";
 
 function Acceuil() {
   const [voirInscription, setVoirInscription] = useState(false);
+  const [voirExplorer, setVoirExplorer] = useState(false);
 
   if (voirInscription) {
     return (
       <>
         <Inscription onAnnuler={() => setVoirInscription(false)} />
+      </>
+    );
+  }
+
+    if (voirExplorer) {
+    return (
+      <>
+        <ExplorerLesCreations onRetour={() => setVoirExplorer(false)} />
       </>
     );
   }
@@ -23,7 +33,7 @@ function Acceuil() {
           <h1>L'art et l'histoire naissent de la même source.</h1>
           <p>Imaginarium est né pour deux choses : le dessin et l'écriture. Deux façons de donner vie à ce que l'esprit invente.</p>
           <Bouton texte="Créer mon espace" onClick={() => setVoirInscription(true)} />
-          <Bouton texte="Explorer les créations" />
+          <Bouton texte="Explorer les créations" onClick={() => setVoirExplorer(true)} />
           <hr />
           <div>
             <div className="stat">
