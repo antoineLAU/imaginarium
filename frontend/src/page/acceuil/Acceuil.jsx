@@ -21,19 +21,19 @@ function Acceuil() {
       <main>
         <section id="accueil">
           <h1>L'art et l'histoire naissent de la même source.</h1>
-          <p>Imaginariume est né pour deux chose: le dessin et l'écriture. Deux façon de donner vie à ce que l'esprit invente.</p>
+          <p>Imaginarium est né pour deux choses : le dessin et l'écriture. Deux façons de donner vie à ce que l'esprit invente.</p>
           <Bouton texte="Créer mon espace" onClick={() => setVoirInscription(true)} />
-          <Bouton texte="Explorer les créations"/>
+          <Bouton texte="Explorer les créations" />
           <hr />
           <div>
-            <div class="stat">
-              <div class="stat-number">7 310</div>
-              <div class="stat-label">dessinateurs &amp; écrivains</div>
+            <div className="stat">
+              <div className="stat-number">7 310</div>
+              <div className="stat-label">dessinateurs &amp; écrivains</div>
             </div>
 
-            <div class="stat">
-              <div class="stat-number">22 000+</div>
-              <div class="stat-label">dessins &amp; textes publiés</div>
+            <div className="stat">
+              <div className="stat-number">22 000+</div>
+              <div className="stat-label">dessins &amp; textes publiés</div>
             </div>
           </div>
         </section>
@@ -41,7 +41,7 @@ function Acceuil() {
           <h2>Dessiner ou écrire</h2>
         </section>
         <section id="dessin">
-          <h2>Des imaginations qui méritent d'être vues </h2>
+          <h2>Des imaginations qui méritent d'être vues</h2>
         </section>
         <section id="écriture">
           <h2>Création du moment</h2>
