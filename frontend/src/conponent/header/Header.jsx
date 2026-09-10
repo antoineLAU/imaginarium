@@ -6,10 +6,10 @@ function Header({ onRejoindre }){
         <div>
             <p>Imaginarium</p>
             <nav>
-            <a href="#accueil">Accueil</a>
-            <a href="#galerie">Top 10</a>
-            <a href="#dessin">art et dessin</a>
-            <a href="#livre">texte et Livre</a>
+            <a href="#accueil">ACCEUIL</a>
+            <a href="#communauté">EXPACES CRÉATIFS</a>
+            <a href="#dessin">CRÉATEUR À DÉCOUVRIR </a>
+            <a href="#écriture">GALERIE & RÉCITS</a>
             </nav>
             <div>
             <Bouton texte="Connexion" />

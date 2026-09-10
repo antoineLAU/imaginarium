@@ -20,19 +20,31 @@ function Acceuil() {
       <Header onRejoindre={() => setVoirInscription(true)} />
       <main>
         <section id="accueil">
-          <h1>Imaginarium</h1>
-          <p> text</p>
+          <h1>L'art et l'histoire naissent de la même source.</h1>
+          <p>Imaginariume est né pour deux chose: le dessin et l'écriture. Deux façon de donner vie à ce que l'esprit invente.</p>
           <Bouton texte="Créer mon espace" onClick={() => setVoirInscription(true)} />
           <Bouton texte="Explorer les créations"/>
+          <hr />
+          <div>
+            <div class="stat">
+              <div class="stat-number">7 310</div>
+              <div class="stat-label">dessinateurs &amp; écrivains</div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-number">22 000+</div>
+              <div class="stat-label">dessins &amp; textes publiés</div>
+            </div>
+          </div>
         </section>
-        <section id="galerie">
-          <h2>top 10 des plus vus</h2>
+        <section id="communauté">
+          <h2>Dessiner ou écrire</h2>
         </section>
         <section id="dessin">
-          <h2>Art et dessin</h2>
+          <h2>Des imaginations qui méritent d'être vues </h2>
         </section>
-        <section id="livre">
-          <h2>texte et livre</h2>
+        <section id="écriture">
+          <h2>Création du moment</h2>
         </section>
       </main>
     </>
