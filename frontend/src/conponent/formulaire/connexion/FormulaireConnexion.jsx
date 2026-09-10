@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Bouton from "../../bouton/Bouton";
 
 function FormulaireConnexion({ onAnnuler }) {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -17,7 +19,16 @@ function FormulaireConnexion({ onAnnuler }) {
       body: JSON.stringify({ email: email, password: password })
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        if (data.token) {
+          localStorage.setItem("pseudo", data.pseudo);
+          localStorage.setItem("role", data.role);
+          localStorage.setItem("token", data.token);
+          navigate("/tableau-de-bord");
+        } else {
+          console.log(data);
+        }
+      });
   }
 
   return (

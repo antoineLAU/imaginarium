@@ -12,7 +12,7 @@ function Accueil() {
       <main>
         <section id="accueil">
           <h1>L'art et l'histoire naissent de la même source.</h1>
-          <p>Imaginarium est né pour deux choses : le dessin et l'écriture. Deux façons de donner vie à ce que l'esprit invente.</p>
+          <p>Imaginarium est né pour des choses créatives : le dessin et l'écriture. Deux façons de donner vie à ce que l'esprit invente.</p>
           <Bouton texte="Créer mon espace" onClick={() => navigate("/inscription")} />
           <Bouton texte="Explorer les créations" onClick={() => navigate("/explorer")} />
           <hr />
