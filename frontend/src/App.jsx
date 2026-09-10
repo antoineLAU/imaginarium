@@ -1,12 +1,17 @@
-import Acceuil from './page/acceuil/Acceuil'
+import { Routes, Route } from 'react-router-dom'
+import Accueil from './page/accueil/Accueil'
+import Inscription from './page/inscription/inscription'
+import ExplorerLesCreations from './page/explorer_les_creations/ExplorerLesCreations'
 import './App.css'
 
 function App() {
-
   return (
-    <>
-      <Acceuil />
-    </>
+    <Routes>
+      <Route path="/" element={<Accueil />} />
+      <Route path="/inscription" element={<Inscription />} />
+      <Route path="/explorer" element={<ExplorerLesCreations />} />
+      <Route path="/explorer/inscription" element={<Inscription />} />
+    </Routes>
   )
 }
 

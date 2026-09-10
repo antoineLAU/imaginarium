@@ -1,25 +1,17 @@
 import "./ExplorerLesCreations.css";
+import { useNavigate } from "react-router-dom";
 import Header from "../../conponent/header/Header";
-import Inscription from "../inscription/inscription";
 import { useState } from "react";
 
-function ExplorerLesCreations({ onRetour }) {
+function ExplorerLesCreations() {
+    const navigate = useNavigate();
     const [filtreActif, setFiltreActif] = useState("Tous");
     const [triActif, setTriActif] = useState("Populaire");
-    const [voirInscription, setVoirInscription] = useState(false);
-
-    if (voirInscription) {
-        return (
-            <>
-                <Inscription onAnnuler={onRetour} />
-            </>
-        );
-    }
 
     return (
         <>
             <div>
-                <Header showNav={false} showConnexion={false} texteBouton="Rejoindre" onRejoindre={() => setVoirInscription(true)} showAccueil={true} onRetour={onRetour} />
+                <Header showNav={false} showConnexion={false} texteBouton="Rejoindre" onRejoindre={() => navigate("inscription")} showAccueil={true} onRetour={() => navigate("/")} />
             </div>
             <p>GALERIE</p>
             <h1>Explorer les créations</h1>
