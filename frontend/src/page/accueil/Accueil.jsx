@@ -8,7 +8,7 @@ function Accueil() {
 
   return (
     <>
-      <Header onRejoindre={() => navigate("/inscription")} />
+      <Header onRejoindre={() => navigate("/inscription")} onConnexion={() => navigate("/connexion")} />
       <main>
         <section id="accueil">
           <h1>L'art et l'histoire naissent de la même source.</h1>

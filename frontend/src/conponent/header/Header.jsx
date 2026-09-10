@@ -1,7 +1,7 @@
 import Bouton from "../bouton/Bouton";
 import "./Header.css";
 
-function Header({ onRejoindre, showNav = true, showConnexion = true, texteBouton = "Rejoindre", onRetour, showAccueil = false }) {
+function Header({ onRejoindre, onConnexion, showNav = true, showConnexion = true, texteBouton = "Rejoindre", onRetour, showAccueil = false, showRejoindre = true }) {
     return (
         <div className="header">
             {showAccueil && <Bouton texte="← Accueil" onClick={onRetour} />}
@@ -17,8 +17,8 @@ function Header({ onRejoindre, showNav = true, showConnexion = true, texteBouton
             )}
 
             <div className="header-buttons">
-                {showConnexion && <Bouton texte="Connexion" />}
-                <Bouton texte={texteBouton} onClick={onRejoindre} />
+                {showConnexion && <Bouton texte="Connexion" onClick={onConnexion} />}
+                {showRejoindre && <Bouton texte={texteBouton} onClick={onRejoindre} />}
             </div>
         </div>
     );
