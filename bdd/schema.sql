@@ -1,8 +1,12 @@
 CREATE TABLE users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  pseudo TEXT NOT NULL,
+  pseudo TEXT NOT NULL UNIQUE,
   email TEXT NOT NULL UNIQUE,
   password_hash TEXT NOT NULL,
+  prenom TEXT,
+  nom TEXT,
+  profil TEXT,
+  bio TEXT,
   role TEXT NOT NULL DEFAULT 'user' CHECK(role IN ('user', 'admin')),
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

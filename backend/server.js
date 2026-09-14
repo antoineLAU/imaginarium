@@ -37,6 +37,10 @@ app.post("/register", (req, res) => {
 const pseudo = req.body.pseudo;
 const email = req.body.email;
 const password = req.body.password;
+const prenom = req.body.prenom || null;
+const nom = req.body.nom || null;
+const profil = req.body.profil || null;
+const bio = req.body.bio || null;
 if (!pseudo || !email || !password) {
 return res.status(400).json({ error: "pseudo email password obligatoires" });
 }
@@ -46,12 +50,29 @@ return res.status(400).json({ error: "pseudo 3 lettres minimum" });
 if (!email.includes("@") || !email.includes(".")) {
 return res.status(400).json({ error: "email invalide" });
 }
-if (password.length < 4) {
-return res.status(400).json({ error: "password 4 minimum" });
+if (password.length < 10) {
+return res.status(400).json({ error: "password 10 minimum" });
+}
+if (!/[A-Z]/.test(password)) {
+return res.status(400).json({ error: "password majuscule obligatoire" });
+}
+if (!/[a-z]/.test(password)) {
+return res.status(400).json({ error: "password minuscule obligatoire" });
+}
+if (!/[^A-Za-z0-9]/.test(password)) {
+return res.status(400).json({ error: "password caractere special obligatoire" });
+}
+const pseudoExiste = db.prepare("SELECT id FROM users WHERE pseudo = ?").get(pseudo);
+if (pseudoExiste) {
+return res.status(400).json({ error: "pseudo deja utilise" });
+}
+const emailExiste = db.prepare("SELECT id FROM users WHERE email = ?").get(email);
+if (emailExiste) {
+return res.status(400).json({ error: "email deja utilise" });
 }
 const hash = bcrypt.hashSync(password, 10);
 try {
-const info = db.prepare("INSERT INTO users (pseudo, email, password_hash) VALUES (?, ?, ?)").run(pseudo, email, hash);
+const info = db.prepare("INSERT INTO users (pseudo, email, password_hash, prenom, nom, profil, bio) VALUES (?, ?, ?, ?, ?, ?, ?)").run(pseudo, email, hash, prenom, nom, profil, bio);
 const token = crypto.randomBytes(24).toString("hex");
 sessions.set(token, { id: info.lastInsertRowid, role: "user" });
 res.json({ id: info.lastInsertRowid, pseudo: pseudo, role: "user", token: token });
@@ -182,7 +203,7 @@ const session = sessions.get(token);
 if (!session || session.role !== "admin") {
 return res.status(403).json({ error: "admin seulement" });
 }
-const rows = db.prepare("SELECT id, pseudo, email, role, created_at FROM users ORDER BY id ASC").all();
+const rows = db.prepare("SELECT id, pseudo, email, prenom, nom, profil, bio, role, created_at FROM users ORDER BY id ASC").all();
 res.json(rows);
 });
 app.delete("/admin/creations/:id", (req, res) => {
