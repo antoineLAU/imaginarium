@@ -1,5 +1,7 @@
 import { useState } from "react";
-import Bouton from "../../bouton/Bouton";
+import Etape1 from "../../etape/etape1/Etape1";
+import Etape2 from "../../etape/etape2/Etape2";
+import Etape3 from "../../etape/etape3/Etape3";
 
 function FormulaireInscription({ onAnnuler }) {
   const [prenom, setprenom] = useState("");
@@ -17,6 +19,50 @@ function FormulaireInscription({ onAnnuler }) {
   const [erreurPassword, setErreurPassword] = useState("");
   const [erreurConfirm, setErreurConfirm] = useState("");
   const [succes, setSucces] = useState("");
+
+  function choisirProfil(valeur) {
+    setProfil(valeur);
+  }
+
+  function changerPrenom(valeur) {
+    setprenom(valeur);
+  }
+
+  function changerNom(valeur) {
+    setnom(valeur);
+  }
+
+  function changerPseudo(valeur) {
+    setPseudo(valeur);
+    if (valeur !== "") {
+      setErreurPseudo("");
+    }
+  }
+
+  function changerEmail(valeur) {
+    setEmail(valeur);
+    if (valeur !== "") {
+      setErreurEmail("");
+    }
+  }
+
+  function changerPassword(valeur) {
+    setPassword(valeur);
+    if (valeur !== "") {
+      setErreurPassword("");
+    }
+  }
+
+  function changerConfirm(valeur) {
+    setConfirmPassword(valeur);
+    if (valeur !== "") {
+      setErreurConfirm("");
+    }
+  }
+
+  function changerBio(valeur) {
+    setBio(valeur);
+  }
 
   function suivant() {
     if (etape === 1) {
@@ -228,73 +274,13 @@ function FormulaireInscription({ onAnnuler }) {
   return (
     <>
       {etape === 1 && (
-        <div>
-          <h3>Etape 1 sur 3</h3>
-          <h3>Ton univers créatif</h3>
-          <h1>Tu es plutôt</h1>
-          <label>
-            <input type="radio" name="profil" checked={profil === "dessinateur"} onChange={() => setProfil("dessinateur")} />
-            Dessinateur.ice
-          </label>
-          <label>
-            <input type="radio" name="profil" checked={profil === "ecrivain"} onChange={() => setProfil("ecrivain")} />
-            Ecrivain.e
-          </label>
-          <label>
-            <input type="radio" name="profil" checked={profil === "polyvalent"} onChange={() => setProfil("polyvalent")} />
-            Polyvalent.e
-          </label>
-          {erreurProfil !== "" && <p>{erreurProfil}</p>}
-          <Bouton texte="Suivant" onClick={suivant} />
-          <Bouton texte="Annuler" onClick={onAnnuler} />
-        </div>
+        <Etape1 profil={profil} erreurProfil={erreurProfil} onChoisirProfil={choisirProfil} onSuivant={suivant} onAnnuler={onAnnuler} />
       )}
       {etape === 2 && (
-        <div>
-          <h3>Etape 2 sur 3</h3>
-          <h3>Ton Identité</h3>
-          <h1>Qui est tu?</h1>
-          <div>
-            <div>
-              <label>Prénom</label>
-              <input onChange={(e) => { setprenom(e.target.value); }} />
-            </div>
-            <div>
-              <label>nom</label>
-            <input onChange={(e) => { setnom(e.target.value); }} />
-            </div>
-          </div>
-          <label>Pseudo</label>
-          <input onChange={(e) => { setPseudo(e.target.value); if (e.target.value !== "") { setErreurPseudo(""); } }} />
-          {erreurPseudo !== "" && <p>{erreurPseudo}</p>}
-          <label>Email</label>
-          <input onChange={(e) => { setEmail(e.target.value); if (e.target.value !== "") { setErreurEmail(""); } }} />
-          {erreurEmail !== "" && <p>{erreurEmail}</p>}
-          <label>Mot de passe</label>
-          <input type="password" onChange={(e) => { setPassword(e.target.value); if (e.target.value !== "") { setErreurPassword(""); } }} />
-          {erreurPassword !== "" && <p>{erreurPassword}</p>}
-          <label>Confirmation du mot de passe</label>
-          <input type="password" onChange={(e) => { setConfirmPassword(e.target.value); if (e.target.value !== "") { setErreurConfirm(""); } }} />
-          {erreurConfirm !== "" && <p>{erreurConfirm}</p>}
-          <Bouton texte="Retour" onClick={retour} />
-          <Bouton texte="Suivant" onClick={suivant} />
-        </div>
+        <Etape2 prenom={prenom} nom={nom} pseudo={pseudo} email={email} password={password} confirmPassword={confirmPassword} erreurPseudo={erreurPseudo} erreurEmail={erreurEmail} erreurPassword={erreurPassword} erreurConfirm={erreurConfirm} onPrenom={changerPrenom} onNom={changerNom} onPseudo={changerPseudo} onEmail={changerEmail} onPassword={changerPassword} onConfirm={changerConfirm} onRetour={retour} onSuivant={suivant} />
       )}
       {etape === 3 && (
-        <div>
-          <h3>Etape 3 sur 3</h3>
-          <h3>Ton univers en quelque mots</h3>
-          <h1>Parle-nous de toi</h1>
-          <div>
-            <label>Ta bio créative</label>
-            <textarea maxLength={280} onChange={(e) => setBio(e.target.value)} />
-            <p>{bio.length}/280</p>
-          </div>
-          <Bouton texte="Retour" onClick={retour} />
-          <Bouton texte="S'inscrire" onClick={inscrire} />
-          <Bouton texte="Annuler" onClick={onAnnuler} />
-          {succes !== "" && <p>{succes}</p>}
-        </div>
+        <Etape3 bio={bio} succes={succes} onBio={changerBio} onRetour={retour} onInscrire={inscrire} onAnnuler={onAnnuler} />
       )}
     </>
   );
