@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import Header from "../../conponent/header/Header";
 import Bouton from "../../conponent/bouton/Bouton";
+import PartieAdmin from "../../conponent/tableau/PartieAdmin/PartieAdmin";
+import PartieUtilisateur from "../../conponent/tableau/PartieUtilisateur/PartieUtilisateur";
 import "./TableauDeBord.css";
 
 function TableauDeBord() {
@@ -19,15 +21,8 @@ function TableauDeBord() {
     <div>
       <Header showNav={false} showConnexion={false} showRejoindre={false} />
       <h1>Tableau de bord</h1>
-      <p>Bienvenue, {pseudo}.</p>
-      {role === "admin" && <p>Tu es Administrateur.</p>}
-      {role !== "admin" && <p>Tu es Utilisateur.</p>}
-      {role === "admin" && (
-        <div>
-          <h2>Partie admin</h2>
-          <p>Ici tu pourras gérer les utilisateurs.</p>
-        </div>
-      )}
+      {role === "admin" && <PartieAdmin pseudo={pseudo} />}
+      {role !== "admin" && <PartieUtilisateur pseudo={pseudo} />}
       <Bouton texte="Se déconnecter" onClick={deconnexion} />
     </div>
   );
