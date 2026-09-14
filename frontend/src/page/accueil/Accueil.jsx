@@ -18,12 +18,12 @@ function Accueil() {
           <hr />
           <div>
             <div className="stat">
-              <div className="stat-number">7 310</div>
+              <div className="stat-number">0</div>
               <div className="stat-label">dessinateurs &amp; écrivains</div>
             </div>
 
             <div className="stat">
-              <div className="stat-number">22 000+</div>
+              <div className="stat-number">0</div>
               <div className="stat-label">dessins &amp; textes publiés</div>
             </div>
           </div>
